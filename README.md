@@ -47,22 +47,41 @@ There are **no** vehicle cockpits, **no** bulky rectangular dashboard panels, an
 
 Pre-built self-contained binaries are available on the [GitHub Releases](https://github.com/tanymbarakah/torque-monitor/releases) page:
 
-- **Standalone Portable:** `TorqueMonitor.exe` (Zero dependencies required).
-- **Windows MSI Installer:** `TorqueMonitor-Setup-x64.msi` (Start menu & desktop shortcuts with clean uninstaller).
+- **Windows MSI Installer (Recommended):** `TorqueMonitor-Setup-x64.msi` — Automated installation with Start Menu & Desktop shortcuts, clean uninstaller, and automatic certificate trust integration.
+- **Portable ZIP Package:** `TorqueMonitor-v1.0.0-Portable.zip` — Standalone portable bundle including `TorqueMonitor.exe`, `Run-TorqueMonitor.cmd`, certificate files, and 1-click trust installer.
+- **Standalone Binary:** `TorqueMonitor.exe` — Single self-contained 64-bit executable (zero external runtime dependencies).
 
 📘 For comprehensive documentation and operation details, please consult the [Official User Manual](USER_MANUAL.md).
 
 ---
 
-## 🛡️ Windows SmartScreen & Security Information
+## 🛡️ Windows SmartScreen & Security on Other Computers
 
-### Why does Windows show "Windows protected your PC"?
-When you download a new executable from the internet, Microsoft Defender SmartScreen displays an informational prompt because the software is brand-new and has not yet accumulated thousands of telemetry downloads in Microsoft's cloud reputation database.
+### Why does Windows Defender SmartScreen appear on other computers?
+When an application is downloaded from the internet, Windows attaches an NTFS alternate data stream known as **Mark-of-the-Web (MotW)** (`ZoneId=3`). 
+Microsoft Defender SmartScreen evaluates newly released software using its cloud reputation database. Because TORQUE MONITOR is a brand-new independent release and not backed by an expensive enterprise hardware EV token ($500+/year), Windows displays the informational blue/brown screen:
+> *"Windows protected your PC — Microsoft Defender SmartScreen prevented an unrecognised app from starting."*
 
-### How to Run:
-1. On the SmartScreen prompt, click **"More info"**.
-2. Click **"Run anyway"**.
-3. *Alternative (1-Click Trust):* Right-click `Install-Certificate.cmd` and select **Run as Administrator** to permanently add the NIHAR TECHNOLOGIES Root CA and Code Signing certificate to your trusted certificate store.
+This is standard Windows behavior for newly compiled software. The application is 100% clean, contains no malware, and is digitally signed by the developer.
+
+### Three Easy Ways to Run on Any Windows 11 / 10 PC:
+
+1. **Option 1: Windows MSI Installer (Recommended)**
+   - Download `TorqueMonitor-Setup-x64.msi`.
+   - Run the installer (if SmartScreen appears, click **"More info"** > **"Run anyway"** once).
+   - The installer runs elevated and **automatically registers the NIHAR TECHNOLOGIES Root CA and Code Signing certificate into Windows's Trusted Root & Publisher stores**.
+   - Result: The application installed in `Program Files` runs without Mark-of-the-Web and is fully trusted by Windows!
+
+2. **Option 2: Instant 1-Click SmartScreen Bypass**
+   - When the *"Windows protected your PC"* dialog appears:
+     - Click **"More info"** (or **"আরও তথ্য"**).
+     - Click the **"Run anyway"** (or **"যেভাবেই হোক চালান"**) button.
+   - The application starts immediately. The built-in self-cleaner automatically strips the download flag so it never asks again.
+
+3. **Option 3: Portable ZIP with 1-Click Launcher**
+   - Download `TorqueMonitor-v1.0.0-Portable.zip` and extract it.
+   - Double-click **`Run-TorqueMonitor.cmd`** to automatically unblock the binary and start the widget.
+   - Or right-click **`Install-Certificate.cmd`** and select **Run as Administrator** to permanently trust the developer certificates on that machine.
 
 ---
 
@@ -77,8 +96,9 @@ All distribution packages are digitally signed with Microsoft Authenticode and t
 
 | File | Format | SHA-256 Hash |
 | :--- | :---: | :--- |
-| **TorqueMonitor.exe** | Standalone x64 | `0C11F2AE6F4411368DBABB36178BDD728EFE75C888C8E7CDBE56650B7EB3B972` |
-| **TorqueMonitor-Setup-x64.msi** | Windows MSI | `8CECAE11EA13FD4F533014AC8B19D6955BDE4590CC19C0BC8CE471AB4748796E` |
+| **TorqueMonitor-Setup-x64.msi** | Windows MSI | `84A6BE8DBBD40185249AB9884BAD4D18663C185536DFB5DC1F89FBFD2AC55FFD` |
+| **TorqueMonitor-v1.0.0-Portable.zip** | Portable ZIP | `E879BCEF2D4DCF685C215E4F9D8A3BB85BB82A9D27A7823A287208DC6ED75F22` |
+| **TorqueMonitor.exe** | Standalone x64 | `7C2D7F5D50A6E7E2EAD830E190BD405E7F0E89767950C6DF5A7EB142B2224F1F` |
 
 Verify digital signature in Windows:
 Right-click file > **Properties** > **Digital Signatures** tab.

@@ -1,4 +1,4 @@
-﻿# PowerShell script to install NIHAR TECHNOLOGIES Root CA and Code Signing Cert
+# PowerShell script to install NIHAR TECHNOLOGIES Root CA and Code Signing Cert
 Write-Host "=====================================================================" -ForegroundColor Cyan
 Write-Host "   TORQUE MONITOR — Digital Certificate Trust Installer" -ForegroundColor Cyan
 Write-Host "   Author: Tanym Barakah | Organization: NIHAR TECHNOLOGIES" -ForegroundColor Cyan

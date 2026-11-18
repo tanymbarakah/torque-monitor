@@ -169,12 +169,14 @@ Digital Signature:
   - Authenticode SHA256 with DigiCert RFC 3161 Timestamping
 
 Hashes:
-  - TorqueMonitor.exe SHA-256: 0C11F2AE6F4411368DBABB36178BDD728EFE75C888C8E7CDBE56650B7EB3B972
-  - TorqueMonitor-Setup-x64.msi SHA-256: 8CECAE11EA13FD4F533014AC8B19D6955BDE4590CC19C0BC8CE471AB4748796E
+  - TorqueMonitor-Setup-x64.msi SHA-256: 84A6BE8DBBD40185249AB9884BAD4D18663C185536DFB5DC1F89FBFD2AC55FFD
+  - TorqueMonitor-v1.0.0-Portable.zip SHA-256: E879BCEF2D4DCF685C215E4F9D8A3BB85BB82A9D27A7823A287208DC6ED75F22
+  - TorqueMonitor.exe SHA-256: 7C2D7F5D50A6E7E2EAD830E190BD405E7F0E89767950C6DF5A7EB142B2224F1F
 
 Microsoft SmartScreen Notes:
   - If Windows Defender SmartScreen shows "Windows protected your PC", click "More info" and then "Run anyway".
-  - Alternatively, run Install-Certificate.cmd as Administrator to install the Root CA into your Trusted Root store.
+  - Alternatively, the MSI installer automatically registers the publisher certificates into Windows Trusted Stores.
+  - For portable usage, run Run-TorqueMonitor.cmd or run Install-Certificate.cmd as Administrator.
 
 If a particular sensor is unavailable on a specific motherboard/CPU without 
 elevated privileges, the gauge displays 'N/A' safely and honestly without 

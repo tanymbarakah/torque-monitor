@@ -25,8 +25,47 @@
         <Component Id="ReadmeFileComp" Guid="41C52A77-9E44-4F91-A90C-731F2E8D2E11">
           <File Id="ReadmeFile" Source="..\Release\README.txt" KeyPath="yes" />
         </Component>
+        <Component Id="RootCACertComp" Guid="21E42A88-1425-430D-8F51-1D5B18549C6B">
+          <File Id="RootCACertFile" Source="..\Release\NiharTechnologies-RootCA.cer" KeyPath="yes" />
+        </Component>
+        <Component Id="CodeSigningCertComp" Guid="53E77047-97B5-4DC3-87D9-1AC187216F6D">
+          <File Id="CodeSigningCertFile" Source="..\Release\TanymBarakah-CodeSigning.cer" KeyPath="yes" />
+        </Component>
+        <Component Id="CertScriptComp" Guid="6BA54BE6-24E4-428E-BC32-A62589D776AC">
+          <File Id="CertScriptFile" Source="..\Release\Install-Certificate.cmd" KeyPath="yes" />
+        </Component>
       </Directory>
     </StandardDirectory>
+
+    <StandardDirectory Id="System64Folder" />
+
+    <!-- Deferred Elevated Custom Actions to automatically register Root CA and Publisher Cert -->
+    <CustomAction Id="InstallRootCACert"
+                  Directory="System64Folder"
+                  ExeCommand="cmd.exe /c certutil.exe -addstore -f Root &quot;[INSTALLFOLDER]NiharTechnologies-RootCA.cer&quot;"
+                  Execute="deferred"
+                  Impersonate="no"
+                  Return="ignore" />
+
+    <CustomAction Id="InstallPublisherCert"
+                  Directory="System64Folder"
+                  ExeCommand="cmd.exe /c certutil.exe -addstore -f TrustedPublisher &quot;[INSTALLFOLDER]TanymBarakah-CodeSigning.cer&quot;"
+                  Execute="deferred"
+                  Impersonate="no"
+                  Return="ignore" />
+
+    <CustomAction Id="UnblockAppBinary"
+                  Directory="System64Folder"
+                  ExeCommand="powershell.exe -NoProfile -ExecutionPolicy Bypass -Command &quot;Unblock-File -Path '[INSTALLFOLDER]TorqueMonitor.exe' -ErrorAction SilentlyContinue&quot;"
+                  Execute="deferred"
+                  Impersonate="no"
+                  Return="ignore" />
+
+    <InstallExecuteSequence>
+      <Custom Action="InstallRootCACert" After="InstallFiles" Condition="NOT Installed" />
+      <Custom Action="InstallPublisherCert" After="InstallRootCACert" Condition="NOT Installed" />
+      <Custom Action="UnblockAppBinary" After="InstallPublisherCert" Condition="NOT Installed" />
+    </InstallExecuteSequence>
 
     <StandardDirectory Id="ProgramMenuFolder">
       <Directory Id="ApplicationProgramsFolder" Name="Torque Monitor">
@@ -59,6 +98,9 @@
       <ComponentRef Id="MainExecutable" />
       <ComponentRef Id="LicenseFileComp" />
       <ComponentRef Id="ReadmeFileComp" />
+      <ComponentRef Id="RootCACertComp" />
+      <ComponentRef Id="CodeSigningCertComp" />
+      <ComponentRef Id="CertScriptComp" />
       <ComponentRef Id="ApplicationShortcut" />
       <ComponentRef Id="DesktopShortcutComp" />
     </Feature>

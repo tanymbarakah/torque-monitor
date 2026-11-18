@@ -11,6 +11,7 @@
 ## WiX Toolset Artifacts
 *.wixobj
 *.wixpdb
+*.cab
 .wix/
 
 ## Build Outputs
@@ -20,6 +21,8 @@ Build/
 # Large release binaries should be attached to GitHub Releases rather than committed to git history
 Release/*.exe
 Release/*.msi
+Release/*.zip
+Release/*.pdb
 
 ## OS Generated Files
 Thumbs.db

@@ -1,3 +1,5 @@
+using System;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows;
 using TorqueMonitor.Services;
@@ -7,6 +9,27 @@ namespace TorqueMonitor
 {
     public partial class App : Application
     {
+        [DllImport("kernel32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool DeleteFile(string lpFileName);
+
+        private static void RemoveMarkOfTheWeb()
+        {
+            try
+            {
+                string? exePath = Environment.ProcessPath;
+                if (!string.IsNullOrEmpty(exePath))
+                {
+                    string zoneStream = exePath + ":Zone.Identifier";
+                    DeleteFile(zoneStream);
+                }
+            }
+            catch
+            {
+                // Best-effort cleanup of Mark-of-the-Web
+            }
+        }
+
         private static Mutex? _singleInstanceMutex;
         private WindowManager? _windowManager;
         private TrayIconService? _trayIconService;
@@ -15,6 +38,9 @@ namespace TorqueMonitor
 
         protected override void OnStartup(StartupEventArgs e)
         {
+            // Remove internet download mark (Mark-of-the-Web) on first run
+            RemoveMarkOfTheWeb();
+
             // Ensure single instance
             const string appGuid = "TorqueMonitor-8A4E1B32-9F2D-4B1C-B738-92A385E8C940";
             _singleInstanceMutex = new Mutex(true, appGuid, out bool isNewInstance);
