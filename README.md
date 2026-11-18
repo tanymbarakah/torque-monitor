@@ -54,16 +54,23 @@ Pre-built self-contained binaries are available on the [GitHub Releases](https:/
 
 ---
 
-## 🔒 Binary Integrity & Anti-Piracy Checksums
+## 🔒 Binary Integrity & Digital Signature
 
-To verify that your downloaded binaries are official, authentic, and untampered:
+All official distribution packages are digitally signed with Microsoft Authenticode and timestamped via DigiCert RFC 3161 timestamping authority.
+
+- **Digital Signature Subject:** `CN=Tanym Barakah, O=NIHAR TECHNOLOGIES, OU=Software Engineering, C=BD`
+- **Certificate Thumbprint:** `50AB0B21E12BB21191B717BE2E7491F62DAD3925`
+- **Public Certificate File:** `TanymBarakah-CodeSigning.cer`
 
 | File | Format | SHA-256 Hash |
 | :--- | :---: | :--- |
-| **TorqueMonitor.exe** | Standalone x64 | `974A4B2408CDDBBE697A48825365713920A324D8C5726A892499FC5CA3DACB48` |
-| **TorqueMonitor-Setup-x64.msi** | Windows MSI | `91CB3C7F40CEA8097E97455A0786267E18CF61FF6432968C6A7AA23FBEAF6832` |
+| **TorqueMonitor.exe** | Standalone x64 | `08A388321400C7D1CE6EE82FB689AD7B9862EFE2E388220E4D5428A71CE5CBE4` |
+| **TorqueMonitor-Setup-x64.msi** | Windows MSI | `EE6B6EB219067F562DDCB9532E58BA15F3FCACCFEC087B5B25413ED654F700B7` |
 
-Verify in PowerShell using:
+Verify digital signature in Windows:
+Right-click file > **Properties** > **Digital Signatures** tab.
+
+Verify hash in PowerShell:
 ```powershell
 Get-FileHash -Algorithm SHA256 "TorqueMonitor.exe"
 ```

@@ -154,12 +154,21 @@ OPTION B: WINDOWS MSI INSTALLER
   4. Fully integrated uninstaller available via Windows Settings > Installed Apps.
 
 --------------------------------------------------------------------------------
-5. HARDWARE MONITORING ENGINE
+5. HARDWARE MONITORING ENGINE & DIGITAL SIGNATURES
 --------------------------------------------------------------------------------
 Powered by LibreHardwareMonitorLib with automatic multi-tiered fallback:
   - Primary: LibreHardwareMonitor Ring-0 sensor interfaces
   - Secondary: High-precision Windows Performance Counters
   - Tertiary: Win32 native APIs (GlobalMemoryStatusEx, GetSystemTimes)
+
+Digital Signature:
+  - Subject: CN=Tanym Barakah, O=NIHAR TECHNOLOGIES, OU=Software Engineering, C=BD
+  - Thumbprint: 50AB0B21E12BB21191B717BE2E7491F62DAD3925
+  - Authenticode SHA256 with DigiCert RFC 3161 Timestamping
+
+Hashes:
+  - TorqueMonitor.exe SHA-256: 08A388321400C7D1CE6EE82FB689AD7B9862EFE2E388220E4D5428A71CE5CBE4
+  - TorqueMonitor-Setup-x64.msi SHA-256: EE6B6EB219067F562DDCB9532E58BA15F3FCACCFEC087B5B25413ED654F700B7
 
 If a particular sensor is unavailable on a specific motherboard/CPU without 
 elevated privileges, the gauge displays 'N/A' safely and honestly without 
