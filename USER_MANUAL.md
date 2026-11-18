@@ -128,24 +128,43 @@ The application runs quietly in your Windows 11 system tray with an automotive t
 
 ---
 
-## 7. DIGITAL SIGNATURE, AUTHENTICITY & CHECKSUMS
+## 7. DIGITAL SIGNATURE, SMARTSCREEN & CHECKSUMS
 
-All official production binaries are digitally signed with Microsoft Authenticode and timestamped via DigiCert RFC 3161 timestamping authority to ensure untampered origin and protect against unauthorized distribution.
+All official production binaries are digitally signed with Microsoft Authenticode and timestamped via DigiCert RFC 3161 authority.
 
-- **Digital Signature Subject:** `CN=Tanym Barakah, O=NIHAR TECHNOLOGIES, OU=Software Engineering, C=BD`
-- **Certificate Thumbprint:** `50AB0B21E12BB21191B717BE2E7491F62DAD3925`
-- **Digest Algorithm:** `SHA256`
+### Understanding Microsoft Defender SmartScreen
+When opening newly downloaded software for the first time, Windows Defender SmartScreen may display:
+`"Windows protected your PC — Microsoft Defender SmartScreen prevented an unrecognised app from starting."`
+
+**Why this occurs:**
+- SmartScreen checks Microsoft's cloud telemetry database for software reputation.
+- Newly published applications that have not yet accumulated millions of global downloads are temporarily flagged by SmartScreen as "unrecognised".
+- This is a standard Windows precautionary notification and does NOT indicate any malware or virus.
+
+**How to Launch:**
+1. Click the **"More info"** link on the SmartScreen dialog.
+2. Click the **"Run anyway"** button that appears.
+3. *Optional (Permanent Machine Trust):* Run `Install-Certificate.cmd` as Administrator to install the publisher's Root CA into your Windows Trusted Root Certification Authorities store.
+
+---
+
+### Authenticode Digital Signature Specifications
+
+- **Signer / Publisher:** `CN=Tanym Barakah, O=NIHAR TECHNOLOGIES, OU=Software Development, C=BD`
+- **Issuer:** `CN=NIHAR TECHNOLOGIES Root CA, O=NIHAR TECHNOLOGIES, C=BD`
+- **Code Signing Thumbprint:** `0D38A7932F2798E8549DF7CD569BCB7BD4DF9571`
+- **Root CA Thumbprint:** `DD6130B9438DF95ED1EA494032219C3BAEF0E624`
 - **Timestamp Provider:** `DigiCert Timestamp Responder (RFC 3161)`
-- **Public Certificate:** `TanymBarakah-CodeSigning.cer`
+- **Public Certificates:** `NiharTechnologies-RootCA.cer`, `TanymBarakah-CodeSigning.cer`
 
 ### Official SHA-256 Release Hashes (v1.0.0 Signed)
 
 ```
 TorqueMonitor.exe (Standalone x64)
-SHA-256: 08A388321400C7D1CE6EE82FB689AD7B9862EFE2E388220E4D5428A71CE5CBE4
+SHA-256: 0C11F2AE6F4411368DBABB36178BDD728EFE75C888C8E7CDBE56650B7EB3B972
 
 TorqueMonitor-Setup-x64.msi (Windows Installer x64)
-SHA-256: EE6B6EB219067F562DDCB9532E58BA15F3FCACCFEC087B5B25413ED654F700B7
+SHA-256: 8CECAE11EA13FD4F533014AC8B19D6955BDE4590CC19C0BC8CE471AB4748796E
 ```
 
 #### How to Verify Digital Signature in Windows Explorer:

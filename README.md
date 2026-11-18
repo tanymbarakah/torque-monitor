@@ -54,18 +54,31 @@ Pre-built self-contained binaries are available on the [GitHub Releases](https:/
 
 ---
 
-## 🔒 Binary Integrity & Digital Signature
+## 🛡️ Windows SmartScreen & Security Information
 
-All official distribution packages are digitally signed with Microsoft Authenticode and timestamped via DigiCert RFC 3161 timestamping authority.
+### Why does Windows show "Windows protected your PC"?
+When you download a new executable from the internet, Microsoft Defender SmartScreen displays an informational prompt because the software is brand-new and has not yet accumulated thousands of telemetry downloads in Microsoft's cloud reputation database.
 
-- **Digital Signature Subject:** `CN=Tanym Barakah, O=NIHAR TECHNOLOGIES, OU=Software Engineering, C=BD`
-- **Certificate Thumbprint:** `50AB0B21E12BB21191B717BE2E7491F62DAD3925`
-- **Public Certificate File:** `TanymBarakah-CodeSigning.cer`
+### How to Run:
+1. On the SmartScreen prompt, click **"More info"**.
+2. Click **"Run anyway"**.
+3. *Alternative (1-Click Trust):* Right-click `Install-Certificate.cmd` and select **Run as Administrator** to permanently add the NIHAR TECHNOLOGIES Root CA and Code Signing certificate to your trusted certificate store.
+
+---
+
+## 🔒 Binary Integrity & Authenticode Digital Signature
+
+All distribution packages are digitally signed with Microsoft Authenticode and timestamped via DigiCert RFC 3161 authority.
+
+- **Publisher / Signer:** `CN=Tanym Barakah, O=NIHAR TECHNOLOGIES, OU=Software Development, C=BD`
+- **Issuer:** `CN=NIHAR TECHNOLOGIES Root CA, O=NIHAR TECHNOLOGIES, C=BD`
+- **Code Signing Thumbprint:** `0D38A7932F2798E8549DF7CD569BCB7BD4DF9571`
+- **Root CA Thumbprint:** `DD6130B9438DF95ED1EA494032219C3BAEF0E624`
 
 | File | Format | SHA-256 Hash |
 | :--- | :---: | :--- |
-| **TorqueMonitor.exe** | Standalone x64 | `08A388321400C7D1CE6EE82FB689AD7B9862EFE2E388220E4D5428A71CE5CBE4` |
-| **TorqueMonitor-Setup-x64.msi** | Windows MSI | `EE6B6EB219067F562DDCB9532E58BA15F3FCACCFEC087B5B25413ED654F700B7` |
+| **TorqueMonitor.exe** | Standalone x64 | `0C11F2AE6F4411368DBABB36178BDD728EFE75C888C8E7CDBE56650B7EB3B972` |
+| **TorqueMonitor-Setup-x64.msi** | Windows MSI | `8CECAE11EA13FD4F533014AC8B19D6955BDE4590CC19C0BC8CE471AB4748796E` |
 
 Verify digital signature in Windows:
 Right-click file > **Properties** > **Digital Signatures** tab.
