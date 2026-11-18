@@ -1,0 +1,204 @@
+<UserControl x:Class="TorqueMonitor.Controls.AnalogueGaugeControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             Width="240" Height="240">
+
+    <UserControl.Resources>
+        <!-- Metallic Outer Bezel Gradient -->
+        <LinearGradientBrush x:Key="MetallicBezelBrush" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#C0C8D4" Offset="0.0"/>
+            <GradientStop Color="#68707C" Offset="0.2"/>
+            <GradientStop Color="#2A2E35" Offset="0.45"/>
+            <GradientStop Color="#8A929E" Offset="0.7"/>
+            <GradientStop Color="#1E2228" Offset="0.95"/>
+            <GradientStop Color="#4A505A" Offset="1.0"/>
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="InnerRimBrush" StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="#0A0C0F" Offset="0.0"/>
+            <GradientStop Color="#1E232B" Offset="0.5"/>
+            <GradientStop Color="#2F3642" Offset="1.0"/>
+        </LinearGradientBrush>
+
+        <RadialGradientBrush x:Key="DialFaceBrush" Center="0.5,0.45" GradientOrigin="0.5,0.45" RadiusX="0.5" RadiusY="0.5">
+            <GradientStop Color="#15181F" Offset="0.0"/>
+            <GradientStop Color="#0C0E13" Offset="0.7"/>
+            <GradientStop Color="#050608" Offset="1.0"/>
+        </RadialGradientBrush>
+
+        <!-- Chrome Center Cap Brush -->
+        <LinearGradientBrush x:Key="ChromeCapBrush" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#F1F5F9" Offset="0.0"/>
+            <GradientStop Color="#94A3B8" Offset="0.3"/>
+            <GradientStop Color="#334155" Offset="0.7"/>
+            <GradientStop Color="#CBD5E1" Offset="1.0"/>
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="GunmetalHubBrush" StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="#252A34" Offset="0.0"/>
+            <GradientStop Color="#0F1116" Offset="1.0"/>
+        </LinearGradientBrush>
+
+        <!-- Red Needle Gradient -->
+        <LinearGradientBrush x:Key="NeedleBrush" StartPoint="0,0" EndPoint="1,0">
+            <GradientStop Color="#FF3333" Offset="0.0"/>
+            <GradientStop Color="#FF1822" Offset="0.45"/>
+            <GradientStop Color="#FF636B" Offset="0.5"/>
+            <GradientStop Color="#FF1822" Offset="0.55"/>
+            <GradientStop Color="#CC000E" Offset="1.0"/>
+        </LinearGradientBrush>
+    </UserControl.Resources>
+
+    <Grid Width="240" Height="240" RenderOptions.EdgeMode="Unspecified">
+        <!-- 1. Ambient Drop Shadow under outer bezel -->
+        <Ellipse Width="236" Height="236" Fill="#45000000" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Ellipse.Effect>
+                <BlurEffect Radius="16"/>
+            </Ellipse.Effect>
+        </Ellipse>
+
+        <!-- 2. Outer Chamfered Metallic Bezel with soft anti-aliased edge smoothing -->
+        <Ellipse Width="232" Height="232" Fill="{StaticResource MetallicBezelBrush}" Stroke="#20404C5A" StrokeThickness="0.8" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+        <!-- 3. Metallic Bezel Highlight Ring (thin outer edge) -->
+        <Ellipse Width="230" Height="230" Stroke="#30FFFFFF" StrokeThickness="0.8" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+        <!-- 4. Inner Dark Recessed Rim -->
+        <Ellipse Width="204" Height="204" Fill="{StaticResource InnerRimBrush}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Ellipse Width="202" Height="202" Stroke="#30000000" StrokeThickness="1.5" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+        <!-- 5. Dial Face (Pure Dark Instrument Cluster) -->
+        <Ellipse Width="196" Height="196" Fill="{StaticResource DialFaceBrush}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+        <!-- 6. Subtle Concentric Etched Rings for Depth -->
+        <Ellipse Width="176" Height="176" Stroke="#10FFFFFF" StrokeThickness="0.8" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Ellipse Width="144" Height="144" Stroke="#0AFFFFFF" StrokeThickness="0.6" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+        <!-- 7. Dynamic Canvas for Scale Arcs, Ticks, and Radial Numbers -->
+        <Canvas x:Name="ScaleCanvas" Width="240" Height="240" IsHitTestVisible="False"/>
+
+        <!-- 8. Gauge Title (Upper dial) -->
+        <TextBlock x:Name="TxtTitle"
+                   Text="{Binding Title}"
+                   Canvas.Top="44"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Top"
+                   Margin="0,44,0,0"
+                   FontFamily="Bahnschrift, Segoe UI, sans-serif"
+                   FontWeight="Bold"
+                   FontSize="12"
+                   Foreground="#B0C0D4"
+                   IsHitTestVisible="False">
+            <TextBlock.Effect>
+                <DropShadowEffect Color="#000000" BlurRadius="4" ShadowDepth="1" Opacity="0.8"/>
+            </TextBlock.Effect>
+        </TextBlock>
+
+        <!-- 9. Needle Layer (Rotated around 120, 120) -->
+        <Canvas Width="240" Height="240" IsHitTestVisible="False">
+            <!-- Needle drop shadow on the dial -->
+            <Path Data="M 118,124 L 118.5,42 L 120,38 L 121.5,42 L 122,124 L 122.5,136 L 117.5,136 Z"
+                  Fill="#60000000">
+                <Path.RenderTransform>
+                    <TransformGroup>
+                        <TranslateTransform X="2" Y="3"/>
+                        <RotateTransform Angle="{Binding CurrentNeedleAngle}" CenterX="120" CenterY="120"/>
+                    </TransformGroup>
+                </Path.RenderTransform>
+                <Path.Effect>
+                    <BlurEffect Radius="3"/>
+                </Path.Effect>
+            </Path>
+
+            <!-- Physical Red Needle -->
+            <Path Data="M 118,124 L 119,41 L 120,37 L 121,41 L 122,124 L 122.5,136 L 117.5,136 Z"
+                  Fill="{StaticResource NeedleBrush}">
+                <Path.RenderTransform>
+                    <RotateTransform Angle="{Binding CurrentNeedleAngle}" CenterX="120" CenterY="120"/>
+                </Path.RenderTransform>
+            </Path>
+        </Canvas>
+
+        <!-- 10. Machined Metallic Center Pivot Cap -->
+        <Grid Width="34" Height="34" HorizontalAlignment="Center" VerticalAlignment="Center" IsHitTestVisible="False">
+            <!-- Pivot Drop Shadow -->
+            <Ellipse Width="34" Height="34" Fill="#70000000">
+                <Ellipse.Effect>
+                    <BlurEffect Radius="4"/>
+                </Ellipse.Effect>
+            </Ellipse>
+            <!-- Chrome Bevel Ring -->
+            <Ellipse Width="30" Height="30" Fill="{StaticResource ChromeCapBrush}"/>
+            <!-- Gunmetal Core -->
+            <Ellipse Width="22" Height="22" Fill="{StaticResource GunmetalHubBrush}"/>
+            <!-- Concentric machined edge -->
+            <Ellipse Width="18" Height="18" Stroke="#20FFFFFF" StrokeThickness="0.6"/>
+            <!-- Center screw slot -->
+            <Ellipse Width="6" Height="6" Fill="#11141A"/>
+        </Grid>
+
+        <!-- 11. Lower Instrument Section: Digital Readout & Secondary Telemetry -->
+        <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,46" IsHitTestVisible="False">
+            <!-- Primary Digital Readout (Large bold typography) -->
+            <TextBlock x:Name="TxtValue"
+                       Text="{Binding FormattedValue}"
+                       HorizontalAlignment="Center"
+                       FontFamily="Bahnschrift, Segoe UI, sans-serif"
+                       FontWeight="Bold"
+                       FontSize="20"
+                       Foreground="#FFFFFF">
+                <TextBlock.Effect>
+                    <DropShadowEffect Color="#000000" BlurRadius="6" ShadowDepth="1" Opacity="0.9"/>
+                </TextBlock.Effect>
+            </TextBlock>
+
+            <!-- Subtitle / Secondary telemetry (e.g. 3.60 GHz or R/W stats) -->
+            <TextBlock x:Name="TxtSubtitle"
+                       Text="{Binding Subtitle}"
+                       HorizontalAlignment="Center"
+                       FontFamily="Segoe UI, Bahnschrift, sans-serif"
+                       FontSize="10"
+                       FontWeight="SemiBold"
+                       Foreground="#94A3B8"
+                       Margin="0,1,0,0">
+                <TextBlock.Effect>
+                    <DropShadowEffect Color="#000000" BlurRadius="3" ShadowDepth="1" Opacity="0.8"/>
+                </TextBlock.Effect>
+            </TextBlock>
+        </StackPanel>
+
+        <!-- 12. Small Live Activity History Graph (Waveform) -->
+        <Grid Width="84" Height="24" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,20" IsHitTestVisible="False">
+            <!-- Subtle baseline reference -->
+            <Line X1="0" Y1="23" X2="84" Y2="23" Stroke="#15FFFFFF" StrokeThickness="0.8" StrokeDashArray="2 2"/>
+            <Line X1="0" Y1="12" X2="84" Y2="12" Stroke="#0AFFFFFF" StrokeThickness="0.6" StrokeDashArray="2 2"/>
+
+            <!-- Glow Polyline Waveform -->
+            <Polyline Points="{Binding GraphPoints}"
+                      Stroke="{Binding AccentColor, Converter={x:Null}}"
+                      x:Name="GraphPolylineGlow"
+                      StrokeThickness="3"
+                      Opacity="0.4"
+                      StrokeLineJoin="Round">
+                <Polyline.Effect>
+                    <BlurEffect Radius="3"/>
+                </Polyline.Effect>
+            </Polyline>
+
+            <!-- Crisp Polyline Waveform -->
+            <Polyline Points="{Binding GraphPoints}"
+                      Stroke="{Binding AccentColor, Converter={x:Null}}"
+                      x:Name="GraphPolyline"
+                      StrokeThickness="1.5"
+                      StrokeLineJoin="Round"/>
+        </Grid>
+
+        <!-- 13. Subtle Glass Specular Reflection Highlight Arc (Upper Left) -->
+        <Path Data="M 36,90 A 94,94 0 0 1 120,26 A 94,94 0 0 0 45,98 Z"
+              Fill="#06FFFFFF"
+              IsHitTestVisible="False"/>
+    </Grid>
+</UserControl>

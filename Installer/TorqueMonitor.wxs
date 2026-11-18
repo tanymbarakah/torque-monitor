@@ -1,0 +1,66 @@
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+  <Package Name="Torque Monitor"
+           Manufacturer="NIHAR TECHNOLOGIES"
+           Version="1.0.0.0"
+           UpgradeCode="C8B7F538-4A12-4217-9195-2E89D771F524"
+           Scope="perMachine">
+
+    <MajorUpgrade DowngradeErrorMessage="A newer version of Torque Monitor is already installed." />
+
+    <MediaTemplate EmbedCab="yes" />
+
+    <Icon Id="TorqueIcon" SourceFile="..\Source\TorqueMonitor\Resources\AppIcon.ico" />
+    <Property Id="ARPPRODUCTICON" Value="TorqueIcon" />
+    <Property Id="ARPHELPLINK" Value="https://nihartechnologies.com" />
+    <Property Id="ARPCONTACT" Value="tanymbarakah@nihartechnologies.com" />
+
+    <StandardDirectory Id="ProgramFiles64Folder">
+      <Directory Id="INSTALLFOLDER" Name="Torque Monitor">
+        <Component Id="MainExecutable" Guid="3F808269-B06A-4A0D-8F65-74A895F31349">
+          <File Id="TorqueMonitorExe" Source="..\Release\TorqueMonitor.exe" KeyPath="yes" />
+        </Component>
+        <Component Id="LicenseFileComp" Guid="85D4F99A-6B1C-4B78-8314-87A9E58A62A1">
+          <File Id="LicenseFile" Source="..\Release\LICENSE.txt" KeyPath="yes" />
+        </Component>
+        <Component Id="ReadmeFileComp" Guid="41C52A77-9E44-4F91-A90C-731F2E8D2E11">
+          <File Id="ReadmeFile" Source="..\Release\README.txt" KeyPath="yes" />
+        </Component>
+      </Directory>
+    </StandardDirectory>
+
+    <StandardDirectory Id="ProgramMenuFolder">
+      <Directory Id="ApplicationProgramsFolder" Name="Torque Monitor">
+        <Component Id="ApplicationShortcut" Guid="7241A0B4-2BE1-4C5C-A77A-EB02CEF87B52">
+          <Shortcut Id="ApplicationStartMenuShortcut"
+                    Name="Torque Monitor"
+                    Description="Premium Analogue Hardware Monitoring Widget for Windows 11 by Tanym Barakah"
+                    Target="[#TorqueMonitorExe]"
+                    WorkingDirectory="INSTALLFOLDER"
+                    Icon="TorqueIcon" />
+          <RemoveFolder Id="CleanUpShortCut" On="uninstall" />
+          <RegistryValue Root="HKCU" Key="Software\NiharTechnologies\TorqueMonitor" Name="installed" Type="integer" Value="1" KeyPath="yes" />
+        </Component>
+      </Directory>
+    </StandardDirectory>
+
+    <StandardDirectory Id="DesktopFolder">
+      <Component Id="DesktopShortcutComp" Guid="A7A977DC-90CD-47DC-B3A2-5645A46BC4C3">
+        <Shortcut Id="ApplicationDesktopShortcut"
+                  Name="Torque Monitor"
+                  Description="Premium Analogue Hardware Monitoring Widget for Windows 11 by Tanym Barakah"
+                  Target="[#TorqueMonitorExe]"
+                  WorkingDirectory="INSTALLFOLDER"
+                  Icon="TorqueIcon" />
+        <RegistryValue Root="HKCU" Key="Software\NiharTechnologies\TorqueMonitor" Name="desktopShortcut" Type="integer" Value="1" KeyPath="yes" />
+      </Component>
+    </StandardDirectory>
+
+    <Feature Id="MainFeature" Title="Torque Monitor" Level="1">
+      <ComponentRef Id="MainExecutable" />
+      <ComponentRef Id="LicenseFileComp" />
+      <ComponentRef Id="ReadmeFileComp" />
+      <ComponentRef Id="ApplicationShortcut" />
+      <ComponentRef Id="DesktopShortcutComp" />
+    </Feature>
+  </Package>
+</Wix>

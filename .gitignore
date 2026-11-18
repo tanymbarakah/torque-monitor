@@ -1,0 +1,27 @@
+## Visual Studio & .NET Build Artifacts
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+## WiX Toolset Artifacts
+*.wixobj
+*.wixpdb
+.wix/
+
+## Build Outputs
+Build/
+
+## Release Binaries
+# Large release binaries should be attached to GitHub Releases rather than committed to git history
+Release/*.exe
+Release/*.msi
+
+## OS Generated Files
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/

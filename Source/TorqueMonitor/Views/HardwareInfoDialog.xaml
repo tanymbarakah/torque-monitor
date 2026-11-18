@@ -1,0 +1,101 @@
+<Window x:Class="TorqueMonitor.Views.HardwareInfoDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="TORQUE MONITOR — Hardware Sensor Diagnostics"
+        Height="550" Width="680"
+        WindowStartupLocation="CenterScreen"
+        Background="#0F1218"
+        Foreground="#E2E8F0"
+        FontFamily="Consolas, Segoe UI, sans-serif"
+        FontSize="12">
+
+    <Grid Margin="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <Grid Grid.Row="0" Margin="0,0,0,12">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0">
+                <TextBlock Text="TORQUE MONITOR HARDWARE SENSOR DIAGNOSTICS"
+                           FontFamily="Bahnschrift, Segoe UI, sans-serif"
+                           FontWeight="Bold"
+                           FontSize="16"
+                           Foreground="#00E5FF"/>
+                <TextBlock Text="Real-time hardware sensors detected via LibreHardwareMonitor, Performance Counters, and Win32 APIs."
+                           FontFamily="Segoe UI, sans-serif"
+                           FontSize="11"
+                           Foreground="#94A3B8"
+                           Margin="0,4,0,0"/>
+            </StackPanel>
+
+            <!-- Minimalist (ⓘ) Info Button -->
+            <Button Grid.Column="1"
+                    Click="OnDeveloperInfoClick"
+                    ToolTip="Developer &amp; License Information"
+                    Background="#1E2634"
+                    BorderBrush="#334155"
+                    BorderThickness="1"
+                    Width="32" Height="32"
+                    Cursor="Hand"
+                    VerticalAlignment="Center">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Bd" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="16">
+                            <TextBlock Text="ⓘ" Foreground="#00E5FF" FontWeight="Bold" FontSize="15" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,-1,0,0"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="#2A384C"/>
+                                <Setter TargetName="Bd" Property="BorderBrush" Value="#00E5FF"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+        </Grid>
+
+        <!-- Diagnostics Output Box -->
+        <Border Grid.Row="1" Background="#161B24" BorderBrush="#2A3241" BorderThickness="1" CornerRadius="6" Padding="12">
+            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                <TextBox x:Name="TxtDiagnostics"
+                         Background="Transparent"
+                         Foreground="#CBD5E1"
+                         BorderThickness="0"
+                         IsReadOnly="True"
+                         TextWrapping="Wrap"
+                         FontFamily="Consolas, Cascadia Code, Courier New"
+                         FontSize="12"/>
+            </ScrollViewer>
+        </Border>
+
+        <!-- Buttons -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,12,0,0">
+            <Button Content="Copy to Clipboard"
+                    Click="OnCopyClick"
+                    Padding="14,6"
+                    Margin="0,0,10,0"
+                    Background="#1E2634"
+                    Foreground="#00E5FF"
+                    BorderBrush="#334155"
+                    BorderThickness="1"
+                    Cursor="Hand"/>
+
+            <Button Content="Close"
+                    Click="OnCloseClick"
+                    Padding="18,6"
+                    Background="#2A3241"
+                    Foreground="#FFFFFF"
+                    BorderBrush="#475569"
+                    BorderThickness="1"
+                    Cursor="Hand"/>
+        </StackPanel>
+    </Grid>
+</Window>
