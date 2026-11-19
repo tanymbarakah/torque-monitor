@@ -96,9 +96,9 @@ All distribution packages are digitally signed with Microsoft Authenticode and t
 
 | File | Format | SHA-256 Hash |
 | :--- | :---: | :--- |
-| **TorqueMonitor-Setup-x64.msi** | Windows MSI | `84A6BE8DBBD40185249AB9884BAD4D18663C185536DFB5DC1F89FBFD2AC55FFD` |
-| **TorqueMonitor-v1.0.0-Portable.zip** | Portable ZIP | `E879BCEF2D4DCF685C215E4F9D8A3BB85BB82A9D27A7823A287208DC6ED75F22` |
-| **TorqueMonitor.exe** | Standalone x64 | `7C2D7F5D50A6E7E2EAD830E190BD405E7F0E89767950C6DF5A7EB142B2224F1F` |
+| **TorqueMonitor-Setup-x64.msi** | Windows MSI | `AA66792015E479BE54286D63D6F9005C566EEBEAE34B4B189932B8A5B1871AF5` |
+| **TorqueMonitor-v1.0.0-Portable.zip** | Portable ZIP | `96847C7B7BBD53683D9207065BC37BDDFB61DDA67BAADA96AD2A43AB3C62578A` |
+| **TorqueMonitor.exe** | Standalone x64 | `F97974F4B6F558CD734C9BE096DFA2D0B5A0A07B3EB07F96085F5466E6DFAD02` |
 
 Verify digital signature in Windows:
 Right-click file > **Properties** > **Digital Signatures** tab.

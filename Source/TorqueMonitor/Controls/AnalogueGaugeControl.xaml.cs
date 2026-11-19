@@ -126,7 +126,7 @@ namespace TorqueMonitor.Controls
                 // Add Numerical Labels for major ticks
                 if (isMajor)
                 {
-                    double textR = radius - 20.0;
+                    double textR = radius - 18.0;
                     double tx = centerX + Math.Cos(mathAngleRad) * textR;
                     double ty = centerY + Math.Sin(mathAngleRad) * textR;
 
